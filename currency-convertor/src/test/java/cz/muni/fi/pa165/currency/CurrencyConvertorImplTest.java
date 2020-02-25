@@ -48,28 +48,36 @@ public class CurrencyConvertorImplTest {
 
     @Test
     public void testConvertWithNullSourceCurrency() {
-        expected
-
+        expectedException.expect(IllegalArgumentException.class);
+        currencyConvertor.convert(null, czkCurrency, BigDecimal.ONE);
     }
 
     @Test
     public void testConvertWithNullTargetCurrency() {
-        fail("Test is not implemented yet.");
+        expectedException.expect(IllegalArgumentException.class);
+        currencyConvertor.convert(eurCurrency, null, BigDecimal.ONE);
     }
 
     @Test
     public void testConvertWithNullSourceAmount() {
-        fail("Test is not implemented yet.");
+        expectedException.expect(IllegalArgumentException.class);
+        currencyConvertor.convert(eurCurrency, czkCurrency, null);
     }
 
     @Test
-    public void testConvertWithUnknownCurrency() {
-        fail("Test is not implemented yet.");
+    public void testConvertWithUnknownCurrency() throws ExternalServiceFailureException {
+        when(exchangeRateTable.getExchangeRate(eurCurrency, czkCurrency))
+                .thenReturn(null);
+        expectedException.expect(UnknownExchangeRateException.class);
+        currencyConvertor.convert(eurCurrency, czkCurrency, BigDecimal.ONE);
     }
 
     @Test
-    public void testConvertWithExternalServiceFailure() {
-        fail("Test is not implemented yet.");
+    public void testConvertWithExternalServiceFailure() throws ExternalServiceFailureException {
+        when(exchangeRateTable.getExchangeRate(eurCurrency, czkCurrency))
+                .thenThrow(UnknownExchangeRateException.class);
+        expectedException.expect(ExternalServiceFailureException.class);
+
     }
 
 }
