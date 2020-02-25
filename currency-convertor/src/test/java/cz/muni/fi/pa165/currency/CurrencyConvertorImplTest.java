@@ -47,7 +47,7 @@ public class CurrencyConvertorImplTest {
     }
 
     @Test
-    public void testConvertWithNullSourceCurrency() {
+    public void testConvertWithNullSourceCurrency() throws ExternalServiceFailureException {
         expectedException.expect(IllegalArgumentException.class);
         currencyConvertor.convert(null, czkCurrency, BigDecimal.ONE);
     }
