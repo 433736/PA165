@@ -6,9 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.MockitoRule;
 
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -23,12 +21,12 @@ public class CurrencyConvertorImplTest {
     private static Currency czkCurrency = Currency.getInstance("CZK");
 
     @Mock
-    private ExchangeRateTable exchangeRateTable;
+    public ExchangeRateTable exchangeRateTable;
 
-    private CurrencyConvertor currencyConvertor;
+    public CurrencyConvertor currencyConvertor;
 
     @Rule
-    ExpectedException expectedException = ExpectedException.none();
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void init() {
@@ -40,14 +38,14 @@ public class CurrencyConvertorImplTest {
         when(exchangeRateTable.getExchangeRate(eurCurrency, czkCurrency))
                 .thenReturn(new BigDecimal("10.0"));
 
-        assertEquals(new BigDecimal(24.12), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4125)));
-        assertEquals(new BigDecimal(24.12), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4115)));
-        assertEquals(new BigDecimal(24.13), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4126)));
-        assertEquals(new BigDecimal(24.12), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4124)));
+        assertEquals(new BigDecimal("24.12"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4125")));
+        assertEquals(new BigDecimal("24.12"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4115")));
+        assertEquals(new BigDecimal("24.13"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4126")));
+        assertEquals(new BigDecimal("24.12"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4124")));
     }
 
     @Test
-    public void testConvertWithNullSourceCurrency() throws ExternalServiceFailureException {
+    public void testConvertWithNullSourceCurrency() {
         expectedException.expect(IllegalArgumentException.class);
         currencyConvertor.convert(null, czkCurrency, BigDecimal.ONE);
     }
@@ -75,9 +73,9 @@ public class CurrencyConvertorImplTest {
     @Test
     public void testConvertWithExternalServiceFailure() throws ExternalServiceFailureException {
         when(exchangeRateTable.getExchangeRate(eurCurrency, czkCurrency))
-                .thenThrow(UnknownExchangeRateException.class);
-        expectedException.expect(ExternalServiceFailureException.class);
-
+                .thenThrow(ExternalServiceFailureException.class);
+        expectedException.expect(UnknownExchangeRateException.class);
+        currencyConvertor.convert(eurCurrency, czkCurrency, BigDecimal.ONE);
     }
 
 }
