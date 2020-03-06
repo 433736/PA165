@@ -31,6 +31,6 @@ public interface CurrencyConvertor {
      *
      */
     BigDecimal convert(Currency sourceCurrency, Currency targetCurrency,
-            BigDecimal sourceAmount) throws ExternalServiceFailureException;
+            BigDecimal sourceAmount);
 
 }

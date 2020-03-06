@@ -28,7 +28,7 @@ public class CurrencyConvertorImplTest {
     private CurrencyConvertor currencyConvertor;
 
     @Rule
-    ExpectedException expectedException = ExpectedException.none();
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void init() {
@@ -40,10 +40,10 @@ public class CurrencyConvertorImplTest {
         when(exchangeRateTable.getExchangeRate(eurCurrency, czkCurrency))
                 .thenReturn(new BigDecimal("10.0"));
 
-        assertEquals(new BigDecimal(24.12), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4125)));
-        assertEquals(new BigDecimal(24.12), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4115)));
-        assertEquals(new BigDecimal(24.13), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4126)));
-        assertEquals(new BigDecimal(24.12), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal(2.4124)));
+        assertEquals(new BigDecimal("24.12"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4125")));
+        assertEquals(new BigDecimal("24.12"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4115")));
+        assertEquals(new BigDecimal("24.13"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4126")));
+        assertEquals(new BigDecimal("24.12"), currencyConvertor.convert(eurCurrency, czkCurrency, new BigDecimal("2.4124")));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class CurrencyConvertorImplTest {
         when(exchangeRateTable.getExchangeRate(eurCurrency, czkCurrency))
                 .thenThrow(UnknownExchangeRateException.class);
         expectedException.expect(ExternalServiceFailureException.class);
-
+        
     }
 
 }
