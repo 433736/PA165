@@ -15,7 +15,6 @@ public class MainXML {
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         CurrencyConvertor convertor = applicationContext.getBean(CurrencyConvertor.class);
-
         BigDecimal result = convertor.convert(EUR, CZK, BigDecimal.ONE);
         System.out.println(result);
     }

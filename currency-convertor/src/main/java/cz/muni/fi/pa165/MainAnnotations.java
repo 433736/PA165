@@ -14,12 +14,11 @@ public class MainAnnotations {
     private static final Currency CZK = Currency.getInstance("CZK");
 
     public static void main(String[] args) {
-        //Not working
-        /*ApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext("cz.muni.fi.pa165");
         CurrencyConvertor convertor = applicationContext.getBean(CurrencyConvertor.class);
 
         BigDecimal result = convertor.convert(EUR, CZK, BigDecimal.ONE);
-        System.out.println(result);*/
+        System.out.println(result);
     }
 
 }
